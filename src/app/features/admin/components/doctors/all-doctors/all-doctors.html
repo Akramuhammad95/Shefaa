@@ -1,0 +1,249 @@
+<div class="p-4 md:p-4 bg-neutral min-h-screen">
+  <h1 class="text-3xl font-semibold text-primary mb-2">Doctors</h1>
+  <p class="text-gray-500 mb-5">
+    Manage all doctors working in the hospital and monitor their status.
+  </p>
+
+  <!-- Actions bar -->
+  <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
+    <div class="flex flex-col gap-3">
+      <div class="flex flex-wrap gap-3">
+        <button
+          routerLink="/admin/dashboard/doctors/add-doctors"
+          class="flex items-center gap-2 bg-primary text-white px-5 py-3 rounded-lg font-medium hover:bg-primary/90 transition text-sm"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+          </svg>
+          Add New Doctor
+        </button>
+       
+      </div>
+      
+    </div>
+
+    <div class="relative w-full lg:w-[340px] lg:mt-0 mt-1">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-4 h-4 absolute inset-y-0 left-4 my-auto text-gray-400"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path stroke-linecap="round" d="M21 21l-4.3-4.3" />
+      </svg>
+      <input
+        type="text"
+        [ngModel]="searchTerm()"
+       (ngModelChange)="searchTerm.set($event); applyFilters()"
+        placeholder="Search by doctor name or license..."
+        class="w-full pl-11 pr-4 py-3 rounded-lg border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+      />
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5">
+      <div class="flex flex-col gap-2">
+        <label class="text-sm text-gray-600">Department</label>
+        <select
+          [ngModel]="departmentFilter()"
+        (ngModelChange)="departmentFilter.set($event); applyFilters()"
+          class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/40"
+        >
+          <option>All Departments</option>
+          <option>Neurology</option>
+          <option>Cardiology</option>
+          <option>Pediatrics</option>
+          <option>Oncology</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-2">
+  <label class="text-sm text-gray-600">Specialization</label>
+  <input
+    type="text"
+    [ngModel]="specializationFilter()"
+    (ngModelChange)="specializationFilter.set($event)"
+    placeholder="Search specialization..."
+    class="border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/40"
+  />
+</div>
+
+      
+
+      
+     
+    </div>
+
+    <div class="flex justify-end gap-3 mt-6">
+      <button
+       (click)="onRefresh()"
+  class="w-11 h-11 flex items-center justify-center rounded-lg border border-gray-300 text-gray-500 hover:bg-gray-50"
+ >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M20 9a8 8 0 00-14.6-4.4M4 15a8 8 0 0014.6 4.4"
+          />
+        </svg>
+      </button>
+      <button
+        (click)="applyFilters()"
+        class="bg-primary text-white px-8 py-2.5 rounded-lg font-medium hover:bg-primary/90 transition text-sm"
+      >
+        Apply
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Table -->
+  <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm min-w-[900px]">
+        <thead>
+          <tr
+            class="text-left text-gray-500 text-xs uppercase tracking-wide border-b border-gray-100 bg-white"
+          >
+            <th class="px-6 py-4 font-medium">Doctor</th>
+
+            <th class="px-6 py-4 font-medium">Specialization</th>
+            <th class="px-6 py-4 font-medium">Department</th>
+            <th class="px-6 py-4 font-medium">Mobile Number</th>
+            <th class="px-6 py-4 font-medium text-right">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (doctor of doctors(); track doctor.id) {
+            <tr class="border-b border-gray-100 last:border-0 hover:bg-gray-50/60 transition">
+              <td class="px-6 py-5 align-top">
+                <div class="flex items-center gap-3 min-w-[210px]">
+                  <div>
+                    <p class="font-semibold text-gray-800 leading-tight">{{ doctor.name }}</p>
+                    <p class="text-gray-400 text-xs leading-tight">{{ doctor.email }}</p>
+                  </div>
+                </div>
+              </td>
+
+              <td class="px-6 py-5 align-top text-gray-600">{{ doctor.specialization }}</td>
+              <td class="px-6 py-5 align-top text-gray-600">{{ doctor.departmentName }}</td>
+              <td class="px-6 py-5 align-top text-gray-600">{{ doctor.phoneNumber }}</td>
+
+              <!-- ============ Actions (icon style, matches Departments page) ============ -->
+              <td class="px-6 py-5 align-top text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button
+                    [routerLink]="['/admin/dashboard/doctors/edit-doctors', doctor.id]"
+                    title="Edit Doctor"
+                    class="w-8 h-8 flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-primary transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                      <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
+                      <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
+                    </svg>
+                  </button>
+                  <button
+                    (click)="deleteDoctor(doctor)"
+                    title="Delete Doctor"
+                    class="w-8 h-8 flex items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-tertiary transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                      <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="px-6 py-10 text-center text-gray-400">No doctors found.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+   <!-- Footer -->
+<div
+  class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-4 border-t border-gray-100 bg-neutral"
+>
+  <div class="text-sm text-gray-500">
+    Showing {{ rangeStart }} - {{ rangeEnd }}
+    of {{ totalDoctors() }} doctors
+  </div>
+
+  <div class="flex items-center gap-3">
+
+    <span class="text-sm text-gray-500">Rows per page:</span>
+
+    <select
+      [ngModel]="rowsPerPage()"
+      (ngModelChange)="onRowsPerPageChange($event)"
+      class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm"
+    >
+      <option [value]="10">10</option>
+      <option [value]="25">25</option>
+      <option [value]="50">50</option>
+    </select>
+
+    <button
+      (click)="goToFirstPage()"
+      [disabled]="!hasPreviousPage()"
+      class="px-3 py-1 border rounded disabled:opacity-40"
+    >
+      «
+    </button>
+
+    <button
+      (click)="goToPreviousPage()"
+      [disabled]="!hasPreviousPage()"
+      class="px-3 py-1 border rounded disabled:opacity-40"
+    >
+      ‹
+    </button>
+
+    <span class="text-sm">
+      Page {{ currentPage() }} / {{ totalPages() }}
+    </span>
+
+    <button
+      (click)="goToNextPage()"
+      [disabled]="!hasNextPage()"
+      class="px-3 py-1 border rounded disabled:opacity-40"
+    >
+      ›
+    </button>
+
+    <button
+      (click)="goToLastPage()"
+      [disabled]="!hasNextPage()"
+      class="px-3 py-1 border rounded disabled:opacity-40"
+    >
+      »
+    </button>
+
+  </div>
+</div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="flex items-center justify-between px-6 py-4">
+
+  <p class="text-sm text-gray-500">
+
+    Showing
+
+    <span class="font-semibold text-gray-700">
+
+      {{ firstItem }}-{{ lastItem }}
+
+    </span>
+
+    of
+
+    <span class="font-semibold text-gray-700">
+
+      {{ totalCount }}
+
+    </span>
+
+    technicians
+
+  </p>
+
+
+  <div class="flex items-center gap-2">
+
+    <button
+      (click)="previous()"
+      [disabled]="currentPage === 1"
+      class="page-btn">
+
+      Previous
+
+    </button>
+
+
+    @for(page of pages; track page){
+
+      <button
+        (click)="changePage(page)"
+        class="number-btn"
+        [class.active]="page === currentPage">
+
+        {{page}}
+
+      </button>
+
+    }
+
+
+    <button
+      (click)="next()"
+      [disabled]="currentPage === totalPages"
+      class="page-btn">
+
+      Next
+
+    </button>
+
+  </div>
+
+</div>

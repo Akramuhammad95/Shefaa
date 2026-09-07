@@ -1,0 +1,73 @@
+<header class="bg-white border-b border-gray-200">
+  <div class="px-4 md:px-6 flex-row lg:px-8 py-4 flex lg:items-center lg:justify-between gap-4">
+    <!-- Left -->
+    <div class="flex flex-1 items-center gap-3">
+      <!-- Hamburger -->
+      <button
+        class="cursor-pointer lg:hidden w-11 h-11 rounded-xl border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"
+        (click)="openSidebar()"
+      >
+        <fa-icon [icon]="bars"></fa-icon>
+      </button>
+      <!-- Search -->
+      <div class="relative w-full">
+        <fa-icon [icon]="search" class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400">
+        </fa-icon>
+        <input
+          type="text"
+          placeholder="Search samples, patients, or results..."
+          class="w-full h-11 bg-[#F3F4F6] rounded-xl pl-14 pr-4 text-sm border border-transparent focus:outline-none focus:border-primary"
+        />
+      </div>
+    </div>
+    <!-- Right -->
+    <div class="flex gap-4 items-center justify-between">
+      <!-- Icons -->
+      <div class="flex items-center gap-4" appClickOutside (clickOutside)="closeNotifications()">
+        <!-- Notification -->
+        <button
+          (click)="$event.stopPropagation(); toggleNotifications()"
+          class="cursor-pointer relative transition"
+        >
+          <fa-icon
+            [icon]="bell"
+            class="text-lg md:text-xl text-gray-700 hover:text-secondary transition-all"
+          >
+          </fa-icon>
+          @if (unreadCount() > 0) {
+            <span
+              class="absolute -top-2 -right-2 min-w-5 h-5 px-1 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center"
+            >
+              {{ badgeCount() }}
+            </span>
+          }
+        </button>
+        <div class="relative">
+          @if (isNotificationOpen()) {
+            <app-notification-dropdown />
+          }
+        </div>
+      </div>
+      <!-- User -->
+      <div class="flex items-center gap-3">
+        <div class="md:block text-right">
+          <h3 class="font-semibold text-primary text-sm sm:text-lg">
+            {{ this.userName }}
+          </h3>
+          <p class="hidden sm:block sm:text-md text-gray-500">
+            {{ this.role }}
+          </p>
+        </div>
+        @if (isRealImage) {
+          <img [src]="image()" alt="User" class="w-14 h-14 rounded-full object-cover" />
+        } @else {
+          <img
+            src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"
+            alt="User"
+            class="w-14 h-14 rounded-full object-cover"
+          />
+        }
+      </div>
+    </div>
+  </div>
+</header>
