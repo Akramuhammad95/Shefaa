@@ -1,0 +1,1 @@
+import{t as i}from"./chunk-74DKCDGC.js";import{Ta as t,lb as a}from"./chunk-MEL4RCWO.js";import"./chunk-2GETZQDO.js";var c=class n{static \u0275fac=function(e){return new(e||n)};static \u0275cmp=t({type:n,selectors:[["app-lab-technicians"]],decls:1,vars:0,template:function(e,o){e&1&&a(0,"router-outlet")},dependencies:[i],encapsulation:2})};export{c as LabTechnicians};

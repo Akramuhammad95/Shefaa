@@ -1,0 +1,1 @@
+import{t as i}from"./chunk-74DKCDGC.js";import{Ta as n,lb as a}from"./chunk-MEL4RCWO.js";import"./chunk-2GETZQDO.js";var s=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-patients"]],decls:1,vars:0,template:function(e,p){e&1&&a(0,"router-outlet")},dependencies:[i],encapsulation:2})};export{s as Patients};

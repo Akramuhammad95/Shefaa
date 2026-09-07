@@ -1,0 +1,1 @@
+import{t as r}from"./chunk-74DKCDGC.js";import{Ta as o,lb as a}from"./chunk-MEL4RCWO.js";import"./chunk-2GETZQDO.js";var n=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-laboratories"]],decls:1,vars:0,template:function(e,i){e&1&&a(0,"router-outlet")},dependencies:[r],encapsulation:2})};export{n as Laboratories};

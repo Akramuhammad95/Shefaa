@@ -1,0 +1,1 @@
+import{t as o}from"./chunk-74DKCDGC.js";import{Ta as s,lb as n}from"./chunk-MEL4RCWO.js";import"./chunk-2GETZQDO.js";var a=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=s({type:t,selectors:[["app-requests"]],decls:1,vars:0,template:function(e,i){e&1&&n(0,"router-outlet")},dependencies:[o],encapsulation:2})};export{a as Requests};

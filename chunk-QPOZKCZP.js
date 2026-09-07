@@ -1,0 +1,1 @@
+var n="active-session:";function r(e){try{let t=sessionStorage.getItem(`${n}${e}`);return t?Number(t):null}catch{return null}}function s(e,t){try{sessionStorage.setItem(`${n}${e}`,String(t))}catch{}}function o(e){try{sessionStorage.removeItem(`${n}${e}`)}catch{}}export{r as a,s as b,o as c};
